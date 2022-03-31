@@ -12,10 +12,11 @@ data = '''
     }
 }'''
 # JSON with objects {} key-value
-# saving JSON "String" into a value
+# saving JSON "String" into a dictionary == info
 
 
 info = json.loads(data)
+print(type(info))
 print('Name:', info["name"])
 print("Hide:", info["email"]["hide"])
 
