@@ -1,30 +1,25 @@
-import urllib.request, urllib.parse, urllib.error
+import urllib.parse
+import urllib.request
 import json
 
-# Google is increasingly requiring keys
-#for this API
-serviceurl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/output?parameters'
-'''key = Enter personal key'''
+service_url = 'https://maps.googleapis.com/maps/api/geocode/json?key=******'
 
 while True:
     address = input('Enter location: ')
     if len(address) < 1:
         break
 
-    url = serviceurl + urllib.parse.urlencode(
-        {'address': address})
-
+    url = service_url + urllib.parse.urlencode({'sensor': 'false',
+                                               'address': address})
     print('Retrieving', url)
     uh = urllib.request.urlopen(url)
-    data = uh.read().decode()
+    data = uh.read()
     print('Retrieved', len(data), 'characters')
-
     try:
         js = json.loads(data)
     except:
         js = None
-
-    if not js or 'status' not in js or js['status'] != 'OK':
+    if 'status' not in js or js['status'] != 'OK':
         print('==== Failure To Retrieve ====')
         print(data)
         continue
